@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "496737211334",
+    "project_id": "social-sphere-f0adc",
+    "storage_bucket": "social-sphere-f0adc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496737211334:android:89cb8910fea2c642c258c7",
+        "android_client_info": {
+          "package_name": "com.example.socialsphere"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496737211334-8fgiviak2sb1ku26g9ohhhtu8mpi1ktj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socialsphere",
+            "certificate_hash": "410c8dbe0df2cfd50cd83cfde07d32f97f6ba3e4"
+          }
+        },
+        {
+          "client_id": "496737211334-e1kteuadtga2c1k58leqvpkeufhu7oia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrU0FsTmHGtE0iXW4CeILCsFNzwccGH64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496737211334-e1kteuadtga2c1k58leqvpkeufhu7oia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
