@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".presentation.ui.fragments.HomeFragment">
 
-</FrameLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/searchToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/dark_blue"
+            android:background="@color/dark_blue"
+            android:elevation="@dimen/_3sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/newsToolbarHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp">
+            </TextView>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_add_box_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/_16sdp">
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

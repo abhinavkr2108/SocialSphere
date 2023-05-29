@@ -3,45 +3,61 @@ package com.example.socialsphere.presentation.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.example.socialsphere.R
 import com.example.socialsphere.databinding.ActivitySignUpBinding
 import com.example.socialsphere.presentation.viewmodels.AuthenticationViewModel
-import com.example.socialsphere.ui.activities.MainActivity
 import com.example.socialsphere.utils.ResponseState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
     private val authenticationViewModel: AuthenticationViewModel by viewModels()
     private lateinit var signUpBinding: ActivitySignUpBinding
 
-    private lateinit var name: String
-    private lateinit var email: String
-    private lateinit var password: String
-    private lateinit var confirmPassword: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         signUpBinding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
 
-        name = signUpBinding.editTextName.text.toString()
-        email = signUpBinding.editTextTextEmailAddress.text.toString()
-        password = signUpBinding.editTextTextPassword.text.toString()
-        confirmPassword = signUpBinding.editTextConfirmPassword.toString()
-
-
-        signUpBinding.btnCreateAccount.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                verifyDetails()
-                authenticationViewModel.signUp(name, email, password)
-                checkStatus()
+        signUpBinding.btnCreateAccount.setOnClickListener {
+            Log.d("FIRST", "FIRST CLICK")
+            verifyDetails()
+            signUp()
+            CoroutineScope(Dispatchers.Main).launch{
+                authenticationViewModel.signUpFlow.collect{
+                    when(it){
+                        is ResponseState.Error -> {
+                            Toast.makeText(this@SignUpActivity, "${it.message}", Toast.LENGTH_SHORT).show()
+                            signUpBinding.signUpProgressBar.visibility = View.GONE
+                        }
+                        is ResponseState.Loading -> {
+                            signUpBinding.signUpProgressBar.visibility = View.VISIBLE
+                            Log.d("SECOND", "SECOND CLICK")
+                        }
+                        is ResponseState.Success -> {
+                            Log.d("SUCCESS", "SUCCESS CLICK")
+                            val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            signUpBinding.signUpProgressBar.visibility = View.GONE
+                            Toast.makeText(this@SignUpActivity, "Login Success", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        null -> { Toast.makeText(this@SignUpActivity, "Exception Occured", Toast.LENGTH_SHORT).show()}
+                    }
+                }
             }
-        })
+        }
+
 
     }
 
@@ -71,25 +87,41 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    private fun signUp(){
+        val name = signUpBinding.editTextName.text.toString()
+        val email = signUpBinding.editTextTextEmailAddress.text.toString()
+        val password = signUpBinding.editTextTextPassword.text.toString()
+        val confirmPassword = signUpBinding.editTextConfirmPassword.text.toString()
+
+        authenticationViewModel.signUp(name, email, password)
+        Log.d("ON_CLICK", "$name, $email, $password")
+
+
+    }
+
     private fun checkStatus(){
-        val loginFlow = authenticationViewModel.loginFlow.value
-        loginFlow.let {
-            when(it){
-                is ResponseState.Error -> {
-                    Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
-                    signUpBinding.signUpProgressBar.visibility = View.GONE
-                }
-                is ResponseState.Loading -> {
-                    signUpBinding.signUpProgressBar.visibility = View.VISIBLE
-                }
-                is ResponseState.Success -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    signUpBinding.signUpProgressBar.visibility = View.GONE
-                    Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-            }
-        }
+//        signUpFlow.let {
+//            when(it){
+//                is ResponseState.Error -> {
+//                    Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+//                    signUpBinding.signUpProgressBar.visibility = View.GONE
+//                }
+//                is ResponseState.Loading -> {
+//                    signUpBinding.signUpProgressBar.visibility = View.VISIBLE
+//                    Log.d("SECOND", "SECOND CLICK")
+//                }
+//                is ResponseState.Success -> {
+//                    Log.d("SUCCESS", "SUCCESS CLICK")
+//                    val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+//                    startActivity(intent)
+//                    signUpBinding.signUpProgressBar.visibility = View.GONE
+//                    Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
+//                    finish()
+//                }
+//
+//                null -> TODO()
+//            }
+//        }
+
     }
 }

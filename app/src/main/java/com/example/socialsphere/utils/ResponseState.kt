@@ -1,6 +1,6 @@
 package com.example.socialsphere.utils
 
- open class ResponseState<T>(
+ sealed class ResponseState<T>(
     val data:T?=null,
     val message: String?= null
 ){

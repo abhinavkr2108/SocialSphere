@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.SearchFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".ui.fragments.SearchFragment">
 
-</FrameLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/searchToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:backgroundTint="@color/dark_blue"
+            android:background="@color/dark_blue"
+            android:elevation="@dimen/_3sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/newsToolbarHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Search News"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp">
+            </TextView>
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search News"
+            android:iconifiedByDefault="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchToolbar"
+            android:layout_margin="@dimen/_16sdp"
+            android:backgroundTint="#F1F0F3"
+            android:background="@color/cardview_dark_background">
+        </SearchView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

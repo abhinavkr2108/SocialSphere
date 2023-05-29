@@ -1,5 +1,6 @@
 package com.example.socialsphere.presentation.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialsphere.domain.repository.SocialSphereRepository
@@ -36,6 +37,7 @@ class AuthenticationViewModel @Inject constructor(private val repository: Social
     fun signUp(name: String, email: String, password: String)= viewModelScope.launch{
         _signUpFlow.value = ResponseState.Loading()
         _signUpFlow.value = repository.signUp(name, email, password)
+        Log.d("SIGNUP_FLOW", "${name}, $email, $password")
     }
 
     fun logout() = viewModelScope.launch {
